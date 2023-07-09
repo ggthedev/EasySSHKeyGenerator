@@ -4,8 +4,7 @@ echo "Welcome to ssh-key generation"
 CURRENT_LOCATION=$PWD
 echo "You are currently in: $CURRENT_LOCATION"
 EXPECTED_LOC=$HOME/.ssh
-if test "$CURRENT_LOCATION" != "$EXPECTED_LOC"
-then
+if test "$CURRENT_LOCATION" != "$EXPECTED_LOC"; then
     echo "You need to be in: $EXPECTED_LOC"
     exit
 fi
