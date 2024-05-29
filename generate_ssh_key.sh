@@ -1,5 +1,7 @@
 #!/bin/bash
-
+FILE_NAME=""
+COMMENT=""
+PASSWORD=""
 check_and_set_keys_location() {
     ssh_key_dir="SSHKEY"
     if [ "$CURRENT_LOCATION" != "$EXPECTED_LOC" ]; then
@@ -17,12 +19,15 @@ check_and_set_keys_location() {
     fi
 }
 
-generate_key_ed25519() {
-    echo -E "Proceeding to generate key ...."
+get_user_info(){
     read -rp "Enter the desired file name without any extension " FILE_NAME
     echo "Confirming the file name is: $FILE_NAME"
     read -rp "Enter the comment [email address|identifying host] " COMMENT
     read -rs -p "Enter the desired password: " PASSWORD
+}
+
+generate_key_ed25519() {
+    echo -E "Proceeding to generate key ...."
     echo "Generating the key [default cipher ed25519].."
     ssh-keygen -t ed25519 -N "$PASSWORD" -C "$COMMENT" -f "$FILE_NAME"
 }
@@ -36,6 +41,7 @@ main() {
     EXPECTED_LOC=$HOME/.ssh
     echo "Default Location of keys: $EXPECTED_LOC"
     check_and_set_keys_location
+    get_user_info
     generate_key_ed25519
 }
 
